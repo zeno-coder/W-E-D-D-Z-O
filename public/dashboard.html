@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WeddingCraft Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="dashboard-page">
+    <header class="dashboard-header">
+      <a class="brand" href="/">WeddingCraft</a>
+      <div class="dashboard-user">
+        <span id="userEmail"></span>
+        <button class="icon-button" id="logoutButton" type="button" aria-label="Logout">⎋</button>
+      </div>
+    </header>
+    <main class="dashboard-shell">
+      <nav class="dashboard-tabs" aria-label="Dashboard sections">
+        <button class="active" type="button" data-panel="create">Create Invitation</button>
+        <button type="button" data-panel="invitations">My Invitations</button>
+        <button type="button" data-panel="downloads">Downloads</button>
+        <button type="button" data-panel="profile">Profile</button>
+      </nav>
+      <section class="dashboard-panel active" id="panel-create">
+        <div class="panel-head">
+          <p class="eyebrow">Create Invitation</p>
+          <h1>Build a wedding website ZIP</h1>
+        </div>
+        <form id="projectForm" class="builder-form">
+          <fieldset>
+            <legend>Template Selection</legend>
+            <div class="template-picker" id="templatePicker">
+              <label><input type="radio" name="templateSlug" value="royal-gold" required><span>Royal Gold</span></label>
+              <label><input type="radio" name="templateSlug" value="traditional-kerala"><span>Traditional Kerala</span></label>
+              <label><input type="radio" name="templateSlug" value="modern-luxury"><span>Modern Luxury</span></label>
+              <label><input type="radio" name="templateSlug" value="floral-elegance"><span>Floral Elegance</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Couple Details</legend>
+            <div class="form-grid">
+              <label>Bride Name<input name="brideName" required maxlength="80"></label>
+              <label>Groom Name<input name="groomName" required maxlength="80"></label>
+              <label>Couple Tagline<input name="tagline" required maxlength="140"></label>
+              <label class="wide">Custom Welcome Message<textarea name="message" required maxlength="900"></textarea></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Wedding Details</legend>
+            <div class="form-grid">
+              <label>Wedding Date<input name="weddingDate" type="date" required></label>
+              <label>Wedding Time<input name="weddingTime" type="time" required></label>
+              <label>Venue Name<input name="venueName" required maxlength="140"></label>
+              <label>Google Maps Link<input name="mapLink" type="url" required maxlength="600"></label>
+              <label class="wide">Venue Address<textarea name="venueAddress" required maxlength="600"></textarea></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Events</legend>
+            <div id="eventsList" class="events-list"></div>
+            <button class="button ghost" id="addEventButton" type="button">Add Event</button>
+          </fieldset>
+          <fieldset>
+            <legend>Theme Settings</legend>
+            <div class="form-grid">
+              <label>Primary Color<input name="primaryColor" type="color" value="#7a1732" required></label>
+              <label>Accent Color<input name="accentColor" type="color" value="#c99a3a" required></label>
+              <label>Font Family<select name="fontFamily" required><option>Cormorant Garamond</option><option>Georgia</option><option>Inter</option><option>Playfair Display</option></select></label>
+              <label>Music<select name="music" required><option>Traditional</option><option>Instrumental</option><option>Romantic</option><option>None</option></select></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Media Uploads</legend>
+            <div class="upload-grid" id="uploadGrid"></div>
+          </fieldset>
+          <button class="button primary full" type="submit">Generate Invitation ZIP</button>
+          <p class="form-status" id="projectStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="dashboard-panel" id="panel-invitations">
+        <div class="panel-head">
+          <p class="eyebrow">My Invitations</p>
+          <h1>Active projects</h1>
+        </div>
+        <div id="projectCards" class="project-grid"></div>
+      </section>
+      <section class="dashboard-panel" id="panel-downloads">
+        <div class="panel-head">
+          <p class="eyebrow">Downloads</p>
+          <h1>ZIP exports</h1>
+        </div>
+        <div id="downloadCards" class="project-grid"></div>
+      </section>
+      <section class="dashboard-panel" id="panel-profile">
+        <div class="panel-head">
+          <p class="eyebrow">Profile</p>
+          <h1>Account</h1>
+        </div>
+        <article class="profile-card">
+          <span>Email</span>
+          <strong id="profileEmail"></strong>
+          <span>Privacy</span>
+          <strong>24 hour automatic expiry</strong>
+        </article>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WeddingCraft Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="auth-page">
+    <main class="auth-shell">
+      <section class="auth-panel">
+        <a class="brand" href="/">WeddingCraft</a>
+        <h1>Welcome to your invitation studio</h1>
+        <p>Create premium invitations, manage downloads, and keep wedding data private by design.</p>
+      </section>
+      <section class="auth-card" aria-labelledby="authTitle">
+        <div class="auth-tabs" role="tablist" aria-label="Account mode">
+          <button class="active" type="button" data-auth-tab="login">Login</button>
+          <button type="button" data-auth-tab="signup">Signup</button>
+        </div>
+        <h2 id="authTitle">Login</h2>
+        <form id="authForm" class="stacked-form">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+          <button class="button primary full" type="submit">Continue</button>
+          <p class="form-status" id="authStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

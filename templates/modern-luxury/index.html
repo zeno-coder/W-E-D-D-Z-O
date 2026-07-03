@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{BRIDE_NAME}} &amp; {{GROOM_NAME}}</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-date="{{WEDDING_DATE}}" data-time="{{WEDDING_TIME}}" data-music="{{MUSIC}}">
+    <main>
+      <section class="hero">
+        <img src="{{HERO_IMAGE}}" alt="{{BRIDE_NAME}} and {{GROOM_NAME}}">
+        <div>
+          <span>{{TAGLINE}}</span>
+          <h1>{{BRIDE_NAME}} <small>&amp;</small> {{GROOM_NAME}}</h1>
+          <p>{{CUSTOM_MESSAGE}}</p>
+        </div>
+      </section>
+      <section class="couple reveal"><h2>The Couple</h2><p>{{BRIDE_NAME}} and {{GROOM_NAME}} welcome you to a refined celebration of love.</p></section>
+      <section class="story reveal"><h2>Story</h2><p>{{CUSTOM_MESSAGE}}</p></section>
+      <section class="countdown reveal"><h2>Countdown</h2><div id="countdown"></div></section>
+      <section class="events reveal"><h2>Timeline</h2><div class="timeline">{{EVENTS}}</div></section>
+      <section class="venue reveal"><h2>{{VENUE_NAME}}</h2><p>{{VENUE_ADDRESS}}</p><a href="{{MAP_LINK}}" target="_blank" rel="noopener">Open Google Maps</a><iframe src="{{MAP_LINK}}" title="Wedding venue map" loading="lazy"></iframe></section>
+      <section class="gallery reveal"><h2>Gallery</h2><div class="gallery-grid">{{GALLERY}}</div></section>
+      <button class="music" id="musicButton" type="button">Music</button>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
