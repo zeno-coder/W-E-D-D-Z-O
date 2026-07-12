@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{brideName}} ❤️ {{groomName}} — A Sacred Union at Guruvayoor</title>
+  <title>{{BRIDE_NAME}} &amp; {{GROOM_NAME}}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=IM+Fell+DW+Pica:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
+<body
+  data-date="{{WEDDING_DATE}}"
+  data-time="{{WEDDING_TIME}}"
+  data-music="{{MUSIC}}">
   <div id="loader">
     <canvas id="loaderCanvas"></canvas>
     <div class="loader-content">
@@ -24,7 +26,7 @@
   <div id="scroll-progress"></div>
   <canvas id="particleCanvas"></canvas>
   <nav id="mainNav">
-    <div class="nav-monogram">N ❤ T</div>
+    <div class="nav-monogram">{{BRIDE_INITIAL}} ❤ {{GROOM_INITIAL}}</div>
     <ul class="nav-links">
       <li><a href="#story">Story</a></li>
       <li><a href="#events">Events</a></li>
@@ -58,15 +60,15 @@
 
       <p class="hero-blessing">ഓം നമഃ ശിവായ · श्री गुरुवायुरप्पन् नमः</p>
 
-      <div class="hero-invite-text">With divine blessings & joyful hearts</div>
+      <div class="hero-invite-text">{{TAGLINE}}</div>
 
       <div class="hero-names">
-        <span class="name-nandhana" id="nameNandhana">Nandhana</span>
+        <span class="name-bride" id="nameBride">{{BRIDE_NAME}}</span>
         <span class="hero-heart" id="heroHeart">❤</span>
-        <span class="name-thejus" id="nameThejus">Thejus</span>
+        <span class="name-groom" id="nameGroom">{{GROOM_NAME}}</span>
       </div>
 
-      <div class="hero-tagline">Two souls, one sacred flame</div>
+      <div class="hero-tagline">{{CUSTOM_MESSAGE}}</div>
 
       <div class="hero-divider">
         <span>✦</span><span class="divider-line"></span><span>🌺</span><span class="divider-line"></span><span>✦</span>
@@ -74,8 +76,8 @@
 
       <div class="hero-date-block">
         <div class="hero-date-label">TYING THE SACRED KNOT</div>
-        <div class="hero-date">February 14, 2033</div>
-        <div class="hero-venue-mini">Guruvayoor Temple, Kerala</div>
+        <div class="hero-date">{{WEDDING_DATE}}</div>
+        <div class="hero-venue-mini">{{VENUE_NAME}}</div>
       </div>
 
       <a href="#story" class="hero-cta">
@@ -101,59 +103,9 @@
       <div class="section-divider"></div>
     </div>
 
-    <div class="timeline">
-
-      <div class="timeline-item left reveal">
-        <div class="timeline-card">
-          <div class="timeline-icon">🌸</div>
-          <div class="timeline-year">2019</div>
-          <h3>First Meeting</h3>
-          <p>Two destinies crossed paths during the festival of Onam — a glance, a smile, and the universe conspired. The fragrance of jasmine carried a whisper of forever.</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item right reveal">
-        <div class="timeline-card">
-          <div class="timeline-icon">🌙</div>
-          <div class="timeline-year">2020</div>
-          <h3>Moonlit Conversations</h3>
-          <p>Through monsoon rains and golden sunsets, words became poetry and silence became music. Every evening deepened the song in our hearts.</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item left reveal">
-        <div class="timeline-card">
-          <div class="timeline-icon">🪔</div>
-          <div class="timeline-year">2022</div>
-          <h3>The Promise</h3>
-          <p>Before the sacred lamps of a Kerala temple, under a sky full of stars, a promise was made — not just of love, but of devotion, respect, and eternity.</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item right reveal">
-        <div class="timeline-card">
-          <div class="timeline-icon">💍</div>
-          <div class="timeline-year">2024</div>
-          <h3>The Ring Ceremony</h3>
-          <p>Families united, blessings showered, and gold gleamed. The mangalsutra threads began their sacred weave, binding two families into one eternal tapestry.</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item left reveal">
-        <div class="timeline-card">
-          <div class="timeline-icon">🌺</div>
-          <div class="timeline-year">2033</div>
-          <h3>Sacred Union</h3>
-          <p>At the divine abode of Guruvayurappan, beneath ancient golden towers, Nandhana and Thejus shall walk the seven sacred steps into forever.</p>
-        </div>
-        <div class="timeline-dot last"></div>
-      </div>
-
-    </div>
+  <div class="timeline">
+  {{LOVE_STORY}}
+  </div>
   </section>
 
   <section id="countdown" class="section-countdown">
@@ -201,51 +153,7 @@
     </div>
 
     <div class="events-grid">
-
-      <div class="event-card reveal" data-event="mehendi">
-        <div class="event-glow"></div>
-        <div class="event-icon-wrap"><span class="event-icon">🌿</span></div>
-        <div class="event-tag">Day One</div>
-        <h3 class="event-name">Mehendi</h3>
-        <div class="event-date">13 February 2033</div>
-        <div class="event-time">4:00 PM — 8:00 PM</div>
-        <p class="event-desc">Artful henna patterns bloom on delicate hands as the celebration of womanhood begins. Songs, laughter, and the deep fragrance of mehndi fill the air.</p>
-        <div class="event-venue-tag">Family Residence · Thrissur</div>
-      </div>
-
-      <div class="event-card reveal" data-event="haldi">
-        <div class="event-glow"></div>
-        <div class="event-icon-wrap"><span class="event-icon">🌕</span></div>
-        <div class="event-tag">Day Two</div>
-        <h3 class="event-name">Haldi</h3>
-        <div class="event-date">14 February 2033</div>
-        <div class="event-time">9:00 AM — 12:00 PM</div>
-        <p class="event-desc">Sacred turmeric paste is applied by loved ones as blessings for a radiant life together. A luminous ritual of golden love and family devotion.</p>
-        <div class="event-venue-tag">Family Residence · Thrissur</div>
-      </div>
-
-      <div class="event-card reveal featured-event" data-event="wedding">
-        <div class="event-glow"></div>
-        <div class="event-icon-wrap"><span class="event-icon">🪔</span></div>
-        <div class="event-tag featured-tag">The Sacred Day</div>
-        <h3 class="event-name">Wedding Ceremony</h3>
-        <div class="event-date">14 February 2033</div>
-        <div class="event-time">7:00 AM — 12:00 PM</div>
-        <p class="event-desc">At the divine threshold of Guruvayoor Temple, under the blessings of Guruvayurappan, Nandhana and Thejus shall be bound in eternal sacred matrimony.</p>
-        <div class="event-venue-tag">Guruvayoor Temple, Kerala</div>
-      </div>
-
-      <div class="event-card reveal" data-event="reception">
-        <div class="event-glow"></div>
-        <div class="event-icon-wrap"><span class="event-icon">🌺</span></div>
-        <div class="event-tag">Evening</div>
-        <h3 class="event-name">Reception</h3>
-        <div class="event-date">14 February 2033</div>
-        <div class="event-time">6:30 PM — 10:30 PM</div>
-        <p class="event-desc">An opulent evening of celebration, music, and joy. Dance under golden lights as two families celebrate the most beautiful beginning of a love story.</p>
-        <div class="event-venue-tag">Guruvayoor Convention Centre</div>
-      </div>
-
+    {{EVENTS}}
     </div>
   </section>
 
@@ -253,14 +161,14 @@
     <div class="venue-inner">
       <div class="venue-text reveal">
         <p class="section-eyebrow">❋ The Sacred Abode ❋</p>
-        <h2 class="venue-title">Guruvayoor Temple</h2>
-        <div class="venue-subtitle">ഗുരുവായൂർ ക്ഷേത്രം</div>
+       <h2 class="venue-title">{{VENUE_NAME}}</h2>
+        <div class="venue-subtitle">{{VENUE_SUBTITLE}}</div>
         <div class="venue-divider"></div>
         <p class="venue-desc">
-          Among the most sacred Vaishnavite temples in India, Guruvayoor Temple stands as an eternal divine flame in the heart of Kerala. Dedicated to Lord Guruvayurappan — a form of Lord Vishnu — this ancient temple holds the power to bless every sacred union performed within its divine presence.
+        {{VENUE_DESCRIPTION}}
         </p>
         <p class="venue-desc">
-          The golden gopuram reaches towards the heavens, while the eternal flame of the temple lamp has burned uninterrupted for centuries. To be married here is to receive the highest divine blessing.
+        {{VENUE_DESCRIPTION}}
         </p>
         <div class="venue-details">
           <div class="venue-detail-item">
@@ -285,7 +193,7 @@
             </div>
           </div>
         </div>
-        <a href="https://maps.google.com/?q=Guruvayoor+Temple+Kerala" target="_blank" class="venue-map-btn">
+        <a href="{{MAP_LINK}}" target="_blank" class="venue-map-btn">
           <span>View on Map</span>
           <span class="btn-arrow">→</span>
         </a>
@@ -319,13 +227,13 @@
       <div class="family-side reveal">
         <div class="family-frame bride-side">
           <div class="family-symbol">🌸</div>
-          <h3 class="family-bride-name">Nandhana</h3>
+          <h3 class="family-bride-name">{{BRIDE_NAME}}</h3>
           <p class="family-title">Beloved Daughter of</p>
           <div class="family-names">
-            <p><strong>Shri. Sanal Kumar MP</strong></p>
-            <p>& <strong>Smt. Bindhu Nair</strong></p>
+            <p><strong>{{BRIDE_FATHER}}</strong></p>
+            <p>& <strong>{{BRIDE_MOTHER}}</strong></p>
           </div>
-          <p class="family-from">Kottayam, Kerala</p>
+          <p class="family-from">{{BRIDE_NATIVE}}</p>
           <div class="family-ornament">✦ ✦ ✦</div>
           <p class="family-blessing-text"><em>"May she walk this sacred path with grace, love, and eternal joy."</em></p>
         </div>
@@ -342,13 +250,13 @@
       <div class="family-side reveal">
         <div class="family-frame groom-side">
           <div class="family-symbol">🌼</div>
-          <h3 class="family-groom-name">Thejus</h3>
+          <h3 class="family-groom-name">{{GROOM_NAME}}</h3>
           <p class="family-title">Beloved Son of</p>
           <div class="family-names">
-            <p><strong>Shri. SasiKumar</strong></p>
-            <p>& <strong>Smt. Shyja SasiKumar</strong></p>
+            <p><strong>{{GROOM_FATHER}}</strong></p>
+            <p>& <strong>Smt. {{GROOM_MOTHER}}</strong></p>
           </div>
-          <p class="family-from">Kottayam, Kerala</p>
+          <p class="family-from">{{GROOM_NATIVE}}, Kerala</p>
           <div class="family-ornament">✦ ✦ ✦</div>
           <p class="family-blessing-text"><em>"May he be the light that guides her home, always and forever."</em></p>
         </div>
@@ -362,64 +270,9 @@
       <h2 class="section-title">Our Story in Frames</h2>
       <div class="section-divider"></div>
     </div>
-    <div class="gallery-grid">
-      <div class="gallery-item reveal g-tall" style="--g-color:#8B1A1A">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">🌺</span>
-            <p>First Glance</p>
-          </div>
-          <div class="gallery-overlay">
-            <span>A chance encounter</span>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="--g-color:#5C3317">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">🪔</span>
-            <p>Diwali Together</p>
-          </div>
-          <div class="gallery-overlay"><span>Festival of lights</span></div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="--g-color:#2D5016">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">🌊</span>
-            <p>Kerala Backwaters</p>
-          </div>
-          <div class="gallery-overlay"><span>Where love flowed</span></div>
-        </div>
-      </div>
-      <div class="gallery-item reveal g-wide" style="--g-color:#1a3a4a">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">💍</span>
-            <p>The Engagement</p>
-          </div>
-          <div class="gallery-overlay"><span>A sacred promise</span></div>
-        </div>
-      </div>
-      <div class="gallery-item reveal g-tall" style="--g-color:#6B3A2A">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">🌸</span>
-            <p>Mehendi Night</p>
-          </div>
-          <div class="gallery-overlay"><span>Art on skin</span></div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="--g-color:#4A2060">
-        <div class="gallery-inner">
-          <div class="gallery-placeholder">
-            <span class="gallery-emoji">🌙</span>
-            <p>Starlit Evenings</p>
-          </div>
-          <div class="gallery-overlay"><span>Forever written</span></div>
-        </div>
-      </div>
-    </div>
+   <div class="gallery-grid">
+{{GALLERY}}
+</div>
   </section>
 
   <section id="rsvp" class="section-rsvp">
@@ -517,12 +370,11 @@
       </div>
     </div>
 
-    <div class="footer-names">Nandhana ❤ Thejus</div>
-    <div class="footer-date">14 February 2033 · Guruvayoor Temple, Kerala</div>
+    <div class="footer-names">{{BRIDE_NAME}} ❤ {{GROOM_NAME}}</div>
+    <div class="footer-date">{{WEDDING_DATE}} · {{VENUE_NAME}}</div>
 
     <blockquote class="footer-quote">
-      "Where there is love, there is life. Where there is devotion, there is divinity.<br/>
-      May this union be eternal, sacred, and endlessly beautiful."
+      "{{FOOTER_QUOTE}}"
     </blockquote>
 
     <div class="footer-blessing">

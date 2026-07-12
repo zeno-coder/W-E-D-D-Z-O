@@ -83,11 +83,81 @@ function bootDashboard() {
   const state = { media: new Map(), projects: [] };
   bindTabs();
   bindLogout();
+  bindTemplateToggle();
   bindEvents();
+  bindTimeline();
+  bindVenueDetails();
   bindUploads(state);
   bindProjectForm(state);
   loadProfile();
   loadProjects(state);
+}
+
+function bindTemplateToggle() {
+  const radios = document.querySelectorAll('input[name="templateSlug"]');
+  const sync = () => {
+    const selected = document.querySelector('input[name="templateSlug"]:checked')?.value;
+    document.querySelectorAll('.floral-only').forEach((section) => {
+      section.hidden = selected !== 'floral-elegance';
+    });
+  };
+  radios.forEach((radio) => radio.addEventListener('change', sync));
+  sync();
+}
+
+function bindTimeline() {
+  const list = document.querySelector('#timelineList');
+  const addButton = document.querySelector('#addTimelineButton');
+  if (!list || !addButton) {
+    return;
+  }
+  addButton.addEventListener('click', () => addTimelineCard());
+  addTimelineCard();
+
+  function addTimelineCard() {
+    const card = document.createElement('article');
+    card.className = 'event-card timeline-card-form';
+    card.innerHTML = `
+      <label>Year / Label<input name="timelineYear" maxlength="20" placeholder="2019" required></label>
+      <label>Icon (emoji)<input name="timelineIcon" maxlength="10" placeholder="🌸"></label>
+      <label class="wide">Milestone Title<input name="timelineTitle" maxlength="100" required></label>
+      <label class="wide">Description<textarea name="timelineDescription" maxlength="400" required></textarea></label>
+      <button class="button ghost" type="button">Remove Milestone</button>
+    `;
+    card.querySelector('button').addEventListener('click', () => {
+      if (list.children.length > 1) {
+        card.remove();
+      }
+    });
+    list.appendChild(card);
+  }
+}
+
+function bindVenueDetails() {
+  const list = document.querySelector('#venueDetailsList');
+  const addButton = document.querySelector('#addVenueDetailButton');
+  if (!list || !addButton) {
+    return;
+  }
+  addButton.addEventListener('click', () => addVenueDetailCard());
+  addVenueDetailCard();
+
+  function addVenueDetailCard() {
+    const card = document.createElement('article');
+    card.className = 'event-card venue-detail-card-form';
+    card.innerHTML = `
+      <label>Icon (emoji)<input name="venueDetailIcon" maxlength="10" placeholder="✈️"></label>
+      <label>Label<input name="venueDetailLabel" maxlength="60" placeholder="Nearest Airport" required></label>
+      <label class="wide">Value<input name="venueDetailValue" maxlength="140" placeholder="Calicut International (80 km)" required></label>
+      <button class="button ghost" type="button">Remove Detail</button>
+    `;
+    card.querySelector('button').addEventListener('click', () => {
+      if (list.children.length > 1) {
+        card.remove();
+      }
+    });
+    list.appendChild(card);
+  }
 }
 
 function bindTabs() {
@@ -129,7 +199,7 @@ function bindEvents() {
   defaults.forEach(([name, description]) => addEventCard(name, description));
   addButton.addEventListener('click', () => addEventCard('', ''));
 
-  function addEventCard(name, description) {
+function addEventCard(name, description) {
     const card = document.createElement('article');
     card.className = 'event-card';
     card.innerHTML = `
@@ -137,6 +207,12 @@ function bindEvents() {
       <label>Event Date<input name="eventDate" type="date" required></label>
       <label>Event Time<input name="eventTime" type="time" required></label>
       <label class="wide">Event Description<textarea name="eventDescription" required maxlength="600">${escapeText(description)}</textarea></label>
+      <label class="floral-only" hidden>Icon (emoji)<input name="eventIcon" maxlength="10" placeholder="🌿"></label>
+      <label class="floral-only" hidden>Day Label<input name="eventDayLabel" maxlength="40" placeholder="Day One"></label>
+      <label class="wide floral-only" hidden>Venue Tag (optional)<input name="eventVenueTag" maxlength="140"></label>
+      <label class="floral-only" hidden style="flex-direction:row;align-items:center;gap:.5rem;">
+        <input type="checkbox" name="eventFeatured" style="min-height:auto;width:auto;"> Mark as featured (main ceremony)
+      </label>
       <button class="button ghost" type="button">Remove Event</button>
     `;
     card.querySelector('button').addEventListener('click', () => {
@@ -145,6 +221,9 @@ function bindEvents() {
       }
     });
     list.appendChild(card);
+    document.querySelectorAll('input[name="templateSlug"]:checked').forEach(() => {});
+    const selected = document.querySelector('input[name="templateSlug"]:checked')?.value;
+    card.querySelectorAll('.floral-only').forEach((el) => { el.hidden = selected !== 'floral-elegance'; });
   }
 }
 
@@ -159,6 +238,11 @@ function bindUploads(state) {
       <span>Drop image or tap to upload</span>
       <img alt="${label} preview">
       <div class="progress" aria-hidden="true"><span></span></div>
+      <select name="layout-${id}" class="floral-only" hidden>
+        <option value="normal">Normal</option>
+        <option value="tall">Tall (gallery)</option>
+        <option value="wide">Wide (gallery)</option>
+      </select>
       <input type="file" accept="image/png,image/jpeg,image/webp" ${required ? 'required' : ''}>
     `;
     const input = box.querySelector('input');
@@ -174,13 +258,16 @@ function bindUploads(state) {
       event.preventDefault();
       box.classList.remove('dragging');
       const file = event.dataTransfer.files[0];
-      handleFile(file, id, label, progress, preview, state);
+      input.files = event.dataTransfer.files; 
+      handleFile(file, input, id, label, progress, preview, state);
     });
-    grid.appendChild(box);
+  grid.appendChild(box);
   });
+  const selected = document.querySelector('input[name="templateSlug"]:checked')?.value;
+  grid.querySelectorAll('.floral-only').forEach((el) => { el.hidden = selected !== 'floral-elegance'; });
 }
 
-async function handleFile(file, slot, label, progress, preview, state) {
+async function handleFile(file, input, slot, label, progress, preview, state) {
   if (!file) {
     return;
   }
@@ -201,7 +288,6 @@ async function handleFile(file, slot, label, progress, preview, state) {
       cloudinary_public_id: upload.public_id,
       cloudinary_url: upload.secure_url
     });
-    const input = document.querySelector(`[data-slot="${slot}"] input`);
     input.required = false;
     progress.style.width = '100%';
   } catch (error) {
@@ -267,12 +353,36 @@ function bindProjectForm(state) {
 
 function buildProjectPayload(form, state) {
   const data = new FormData(form);
-  const events = [...document.querySelectorAll('.event-card')].map((card) => ({
+
+  const events = [...document.querySelectorAll('#eventsList .event-card')].map((card) => ({
     event_name: card.querySelector('[name="eventName"]').value,
     event_date: card.querySelector('[name="eventDate"]').value,
     event_time: card.querySelector('[name="eventTime"]').value,
-    event_description: card.querySelector('[name="eventDescription"]').value
+    event_description: card.querySelector('[name="eventDescription"]').value,
+    icon: card.querySelector('[name="eventIcon"]')?.value || '',
+    dayLabel: card.querySelector('[name="eventDayLabel"]')?.value || '',
+    venueTag: card.querySelector('[name="eventVenueTag"]')?.value || '',
+    featured: card.querySelector('[name="eventFeatured"]')?.checked || false
   }));
+
+  const timeline = [...document.querySelectorAll('#timelineList .event-card')].map((card) => ({
+    year: card.querySelector('[name="timelineYear"]').value,
+    icon: card.querySelector('[name="timelineIcon"]').value,
+    title: card.querySelector('[name="timelineTitle"]').value,
+    description: card.querySelector('[name="timelineDescription"]').value
+  }));
+
+  const venueDetails = [...document.querySelectorAll('#venueDetailsList .event-card')].map((card) => ({
+    icon: card.querySelector('[name="venueDetailIcon"]').value,
+    label: card.querySelector('[name="venueDetailLabel"]').value,
+    value: card.querySelector('[name="venueDetailValue"]').value
+  }));
+
+  const media = [...state.media.values()].map((item) => {
+    const layoutSelect = document.querySelector(`select[name="layout-${item.media_type}"]`);
+    return { ...item, layout: layoutSelect ? layoutSelect.value : 'normal' };
+  });
+
   return {
     templateSlug: data.get('templateSlug'),
     couple: {
@@ -295,7 +405,17 @@ function buildProjectPayload(form, state) {
     },
     music: data.get('music'),
     events,
-    media: [...state.media.values()]
+    media,
+    timeline,
+    venueDetails,
+    openingBlessing: data.get('openingBlessing') || '',
+    footerQuote: data.get('footerQuote') || '',
+    family: {
+      brideParents: data.get('brideParents') || '',
+      brideHometown: data.get('brideHometown') || '',
+      groomParents: data.get('groomParents') || '',
+      groomHometown: data.get('groomHometown') || ''
+    }
   };
 }
 

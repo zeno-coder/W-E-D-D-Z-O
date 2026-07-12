@@ -58,6 +58,29 @@
               <label class="wide">Venue Address<textarea name="venueAddress" required maxlength="600"></textarea></label>
             </div>
           </fieldset>
+<fieldset id="floralExtras" class="floral-only" hidden>
+            <legend>Story &amp; Blessing (Floral Elegance)</legend>
+            <div class="form-grid">
+              <label class="wide">Opening Blessing (optional scripture/blessing line)<input name="openingBlessing" maxlength="200"></label>
+              <label class="wide">Footer Quote (optional)<textarea name="footerQuote" maxlength="300"></textarea></label>
+            </div>
+            <div id="timelineList" class="events-list"></div>
+            <button class="button ghost" id="addTimelineButton" type="button">Add Story Milestone</button>
+          </fieldset>
+          <fieldset id="familyExtras" class="floral-only" hidden>
+            <legend>Family Details (Floral Elegance)</legend>
+            <div class="form-grid">
+              <label>Bride's Parents<input name="brideParents" maxlength="160" placeholder="Mr. &amp; Mrs. Menon"></label>
+              <label>Bride's Hometown<input name="brideHometown" maxlength="100"></label>
+              <label>Groom's Parents<input name="groomParents" maxlength="160" placeholder="Mr. &amp; Mrs. Nair"></label>
+              <label>Groom's Hometown<input name="groomHometown" maxlength="100"></label>
+            </div>
+          </fieldset>
+          <fieldset id="venueExtras" class="floral-only" hidden>
+            <legend>Venue Details (Floral Elegance)</legend>
+            <div id="venueDetailsList" class="events-list"></div>
+            <button class="button ghost" id="addVenueDetailButton" type="button">Add Venue Detail</button>
+          </fieldset>
           <fieldset>
             <legend>Events</legend>
             <div id="eventsList" class="events-list"></div>

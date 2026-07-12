@@ -1,29 +1,406 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{BRIDE_NAME}} &amp; {{GROOM_NAME}}</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body data-date="{{WEDDING_DATE}}" data-time="{{WEDDING_TIME}}" data-music="{{MUSIC}}">
-    <main>
-      <section class="hero">
-        <img src="{{HERO_IMAGE}}" alt="{{BRIDE_NAME}} and {{GROOM_NAME}}">
-        <div>
-          <span>{{TAGLINE}}</span>
-          <h1>{{BRIDE_NAME}} <small>&amp;</small> {{GROOM_NAME}}</h1>
-          <p>{{CUSTOM_MESSAGE}}</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{BRIDE_NAME}} &amp; {{GROOM_NAME}} — A Sacred Union at {{VENUE_NAME}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=IM+Fell+DW+Pica:ital@0;1&display=swap" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body
+  data-date="{{WEDDING_DATE}}"
+  data-time="{{WEDDING_TIME}}"
+  data-music="{{MUSIC}}"
+  data-bride="{{BRIDE_NAME}}"
+  data-groom="{{GROOM_NAME}}"
+>
+
+  <div id="loader">
+    <canvas id="loaderCanvas"></canvas>
+    <div class="loader-content">
+      <div class="loader-om">ॐ</div>
+      <div class="loader-diya">🪔</div>
+      <p class="loader-text">Preparing a sacred invitation…</p>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <div id="cursor-glow"></div>
+  <div id="scroll-progress"></div>
+  <canvas id="particleCanvas"></canvas>
+
+  <nav id="mainNav">
+    <div class="nav-monogram" id="navMonogram"></div>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#venue">Venue</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+    </ul>
+    <button class="music-toggle" id="musicToggle" type="button" title="Toggle ambient music" aria-label="Toggle ambient music">♪</button>
+  </nav>
+
+  <main>
+    <section id="hero" class="hero">
+      <img class="hero-photo" src="{{HERO_IMAGE}}" alt="{{BRIDE_NAME}} and {{GROOM_NAME}}">
+      <div class="hero-bg-layers">
+        <div class="layer layer-1"></div>
+        <div class="layer layer-2"></div>
+        <div class="layer layer-3"></div>
+      </div>
+
+      <div class="diya-row top">
+        <span class="diya">🪔</span><span class="diya">🪔</span><span class="diya">🪔</span>
+      </div>
+
+      <div class="hero-center">
+        <div class="hero-ornament">
+          <svg viewBox="0 0 300 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,20 Q75,0 150,20 Q225,40 300,20" stroke="#c8963e" stroke-width="1" fill="none" opacity="0.6"/>
+            <circle cx="150" cy="20" r="3" fill="#c8963e"/>
+            <circle cx="75" cy="10" r="1.5" fill="#c8963e" opacity="0.5"/>
+            <circle cx="225" cy="30" r="1.5" fill="#c8963e" opacity="0.5"/>
+          </svg>
         </div>
-      </section>
-      <section class="couple reveal"><h2>Blooming Together</h2><p>{{BRIDE_NAME}} and {{GROOM_NAME}} invite you into a celebration filled with grace, flowers, and family.</p></section>
-      <section class="story reveal"><h2>Our Story</h2><p>{{CUSTOM_MESSAGE}}</p></section>
-      <section class="countdown reveal"><h2>Countdown</h2><div id="countdown"></div></section>
-      <section class="events reveal"><h2>Event Timeline</h2><div class="timeline">{{EVENTS}}</div></section>
-      <section class="venue reveal"><h2>{{VENUE_NAME}}</h2><p>{{VENUE_ADDRESS}}</p><a href="{{MAP_LINK}}" target="_blank" rel="noopener">Open Google Maps</a><iframe src="{{MAP_LINK}}" title="Wedding venue map" loading="lazy"></iframe></section>
-      <section class="gallery reveal"><h2>Gallery</h2><div class="gallery-grid">{{GALLERY}}</div></section>
-      <button class="music" id="musicButton" type="button">Music</button>
-    </main>
-    <script src="script.js"></script>
-  </body>
+
+        <!-- Optional: a scripture / blessing line. Leave empty in the generator to omit it entirely. -->
+        <p class="hero-blessing">{{OPENING_BLESSING}}</p>
+
+        <div class="hero-invite-text">{{TAGLINE}}</div>
+
+        <div class="hero-names">
+          <span class="hero-name" id="heroNameBride">{{BRIDE_NAME}}</span>
+          <span class="hero-heart" id="heroHeart">❤</span>
+          <span class="hero-name" id="heroNameGroom">{{GROOM_NAME}}</span>
+        </div>
+
+        <p class="hero-message">{{CUSTOM_MESSAGE}}</p>
+
+        <div class="hero-divider">
+          <span>✦</span><span class="divider-line"></span><span>🌺</span><span class="divider-line"></span><span>✦</span>
+        </div>
+
+        <div class="hero-date-block">
+          <div class="hero-date-label">Tying the Sacred Knot</div>
+          <div class="hero-date" id="heroDateDisplay">{{WEDDING_DATE}}</div>
+          <div class="hero-venue-mini">{{VENUE_NAME}}</div>
+        </div>
+
+        <a href="#story" class="hero-cta">
+          <span>Begin the Journey</span>
+          <div class="cta-glow"></div>
+        </a>
+
+        <div class="scroll-indicator">
+          <div class="scroll-dot"></div>
+          <span>Scroll to explore</span>
+        </div>
+      </div>
+
+      <div class="diya-row bottom">
+        <span class="diya">🪔</span><span class="diya">🪔</span><span class="diya">🪔</span>
+      </div>
+    </section>
+
+    <section id="story" class="section-story">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">❋ Our Journey ❋</p>
+        <h2 class="section-title">A Love Written in the Stars</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="timeline">
+        <!--
+          {{STORY_TIMELINE}} — generator injects one block per milestone, alternating "left"/"right",
+          e.g.:
+          <div class="timeline-item left reveal">
+            <div class="timeline-card">
+              <div class="timeline-icon">🌸</div>
+              <div class="timeline-year">2019</div>
+              <h3>First Meeting</h3>
+              <p>Milestone description…</p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          Add class="timeline-dot last" on the final item's dot for a filled gold dot.
+        -->
+        {{STORY_TIMELINE}}
+      </div>
+    </section>
+
+    <section class="section-countdown">
+      <div class="countdown-bg"></div>
+      <div class="countdown-content reveal">
+        <p class="section-eyebrow gold">❋ The Sacred Day Approaches ❋</p>
+        <h2 class="countdown-title">Until We Say <em>I Do</em></h2>
+        <div class="countdown-timer">
+          <div class="countdown-unit">
+            <div class="countdown-number" id="cd-days">00</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-sep">✦</div>
+          <div class="countdown-unit">
+            <div class="countdown-number" id="cd-hours">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-sep">✦</div>
+          <div class="countdown-unit">
+            <div class="countdown-number" id="cd-minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-sep">✦</div>
+          <div class="countdown-unit">
+            <div class="countdown-number" id="cd-seconds">00</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="section-events">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">❋ Celebrations ❋</p>
+        <h2 class="section-title">Sacred Ceremonies</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="events-grid">
+        <!--
+          {{EVENTS}} — generator injects one block per ceremony, e.g.:
+          <div class="event-card reveal" data-event="mehendi">
+            <div class="event-glow"></div>
+            <div class="event-icon-wrap"><span class="event-icon">🌿</span></div>
+            <div class="event-tag">Day One</div>
+            <h3 class="event-name">Mehendi</h3>
+            <div class="event-date">13 February 2033</div>
+            <div class="event-time">4:00 PM — 8:00 PM</div>
+            <p class="event-desc">Description…</p>
+            <div class="event-venue-tag">Venue name</div>
+          </div>
+          Add class="event-card reveal featured-event" and a data-tag like "The Sacred Day"
+          for the main ceremony to give it the featured gold treatment.
+        -->
+        {{EVENTS}}
+      </div>
+    </section>
+
+    <section id="venue" class="section-venue">
+      <div class="venue-inner">
+        <div class="venue-text reveal">
+          <p class="section-eyebrow">❋ The Sacred Abode ❋</p>
+          <h2 class="venue-title">{{VENUE_NAME}}</h2>
+          <div class="venue-divider"></div>
+          <p class="venue-desc">{{VENUE_ADDRESS}}</p>
+
+          <div class="venue-details">
+            <!--
+              {{VENUE_DETAILS}} — generator injects one row per detail (airport, railway, parking…), e.g.:
+              <div class="venue-detail-item">
+                <span class="vd-icon">✈️</span>
+                <div><strong>Nearest Airport</strong><span>Calicut International (80 km)</span></div>
+              </div>
+            -->
+            {{VENUE_DETAILS}}
+          </div>
+
+          <a href="{{MAP_LINK}}" target="_blank" rel="noopener" class="venue-map-btn">
+            <span>View on Map</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
+        <div class="venue-map-wrap reveal">
+          <div class="map-frame">
+            <div class="map-ornament top-left">✦</div>
+            <div class="map-ornament top-right">✦</div>
+            <div class="map-ornament bot-left">✦</div>
+            <div class="map-ornament bot-right">✦</div>
+            <iframe
+              src="{{MAP_LINK}}"
+              width="100%" height="100%" style="border:0;" allowfullscreen=""
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Wedding venue map">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="family" class="section-family">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">❋ Beloved Families ❋</p>
+        <h2 class="section-title">With the Blessings of Our Families</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="family-grid">
+        <div class="family-side reveal">
+          <div class="family-frame bride-side">
+            <div class="family-symbol">🌸</div>
+            <h3 class="family-name">{{BRIDE_NAME}}</h3>
+            <p class="family-title">Beloved Daughter of</p>
+            <p class="family-parents">{{BRIDE_PARENTS}}</p>
+            <p class="family-from">{{BRIDE_HOMETOWN}}</p>
+          </div>
+        </div>
+
+        <div class="family-center reveal">
+          <div class="family-center-symbol">
+            <div class="center-ring outer"></div>
+            <div class="center-ring inner"></div>
+            <span class="center-heart">❤</span>
+          </div>
+        </div>
+
+        <div class="family-side reveal">
+          <div class="family-frame groom-side">
+            <div class="family-symbol">🌼</div>
+            <h3 class="family-name">{{GROOM_NAME}}</h3>
+            <p class="family-title">Beloved Son of</p>
+            <p class="family-parents">{{GROOM_PARENTS}}</p>
+            <p class="family-from">{{GROOM_HOMETOWN}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section-gallery">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">❋ Moments ❋</p>
+        <h2 class="section-title">Our Story in Frames</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="gallery-grid">
+        <!--
+          {{GALLERY}} — generator injects one figure per photo, e.g.:
+          <figure class="gallery-item reveal">
+            <img src="photo.jpg" alt="Caption text">
+            <figcaption>Caption text</figcaption>
+          </figure>
+          Optionally add class="g-tall" or "g-wide" to a figure for masonry variety.
+        -->
+        {{GALLERY}}
+      </div>
+    </section>
+
+    <section id="rsvp" class="section-rsvp">
+      <div class="rsvp-bg"></div>
+      <div class="rsvp-container reveal">
+        <div class="rsvp-header">
+          <p class="section-eyebrow gold">❋ Join Our Celebration ❋</p>
+          <h2 class="rsvp-title">You Are Cordially Invited</h2>
+          <p class="rsvp-subtitle">Let us know you'll grace our celebration with your presence</p>
+        </div>
+
+        <div class="rsvp-form-wrap">
+          <div class="rsvp-ornament-top">
+            <svg viewBox="0 0 400 30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,15 Q100,0 200,15 Q300,30 400,15" stroke="#c8963e" stroke-width="0.8" fill="none"/>
+              <circle cx="200" cy="15" r="3" fill="#c8963e"/>
+              <circle cx="100" cy="7" r="1.5" fill="#c8963e" opacity="0.6"/>
+              <circle cx="300" cy="23" r="1.5" fill="#c8963e" opacity="0.6"/>
+            </svg>
+          </div>
+
+          <form id="rsvpForm">
+            <div class="form-group">
+              <label for="rsvp-name">Your Full Name *</label>
+              <input type="text" id="rsvp-name" name="name" placeholder="Enter your name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="rsvp-email">Email Address</label>
+              <input type="email" id="rsvp-email" name="email" placeholder="your@email.com" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rsvp-guests">Number of Guests *</label>
+                <select id="rsvp-guests" name="guests">
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5 Guests</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Will You Attend? *</label>
+                <div class="attendance-btns">
+                  <button type="button" class="attend-btn" data-value="yes" id="attendYes">Joyfully Yes 🌸</button>
+                  <button type="button" class="attend-btn" data-value="no" id="attendNo">Regretfully No</button>
+                </div>
+                <input type="hidden" name="attendance" id="attendanceValue" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rsvp-message">A Blessing or Message</label>
+              <textarea id="rsvp-message" name="message" placeholder="Share your blessings for the couple…" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="rsvp-submit" id="rsvpSubmit">
+              <span class="submit-text">Send Your Blessings</span>
+              <span class="submit-icon">🌺</span>
+              <div class="submit-glow"></div>
+            </button>
+          </form>
+
+          <div class="rsvp-ornament-bot">
+            <svg viewBox="0 0 400 30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,15 Q100,30 200,15 Q300,0 400,15" stroke="#c8963e" stroke-width="0.8" fill="none"/>
+              <circle cx="200" cy="15" r="3" fill="#c8963e"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div id="rsvpModal" class="rsvp-modal">
+        <div class="modal-content">
+          <div class="modal-particles" id="modalParticles"></div>
+          <div class="modal-icon">🌺</div>
+          <h3 class="modal-title">Blessings Received!</h3>
+          <p class="modal-message" id="modalMessage"></p>
+          <button class="modal-close" type="button" id="modalCloseBtn">Close with Love ❤</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-ornament">
+      <div class="footer-lotus">🪷</div>
+      <div class="footer-divider-row">
+        <span class="fd-line"></span>
+        <span class="fd-symbol">✦</span>
+        <span class="fd-symbol">ॐ</span>
+        <span class="fd-symbol">✦</span>
+        <span class="fd-line"></span>
+      </div>
+    </div>
+
+    <div class="footer-names">{{BRIDE_NAME}} ❤ {{GROOM_NAME}}</div>
+    <div class="footer-date"><span id="footerDate">{{WEDDING_DATE}}</span> · <span>{{VENUE_NAME}}</span></div>
+
+    <blockquote class="footer-quote">{{FOOTER_QUOTE}}</blockquote>
+
+    <div class="footer-blessing">
+      <span>🌺</span>
+      <span class="blessing-text">Subhamastu</span>
+      <span>🌺</span>
+    </div>
+
+    <div class="footer-final">
+      <div class="footer-diya-row">
+        <span>🪔</span><span>🪔</span><span>🪔</span>
+      </div>
+      <p class="footer-credit">Crafted with love, light &amp; devotion</p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
 </html>
